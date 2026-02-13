@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Will You Be My Valentine? ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 2s ease;
+}
+
+.hero h1 {
+  font-size: 3rem;
+}
+
+.hero p {
+  max-width: 600px;
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.gallery {
+  padding: 60px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  transition: transform 0.6s;
+}
+
+.gallery img:hover {
+  transform: scale(1.05) rotate(1deg);
+}
+
+.proposal {
+  padding: 80px 20px;
+}
+
+.buttons {
+  margin-top: 30px;
+}
+
+button {
+  font-size: 1.2rem;
+  padding: 14px 30px;
+  margin: 10px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.yes {
+  background: #ff4d6d;
+  color: white;
+}
+
+.no {
+  background: white;
+  color: #333;
+  position: relative;
+}
+
+#final {
+  display: none;
+  padding: 100px 20px;
+  font-size: 2rem;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(30px);}
+  to {opacity:1; transform: translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+  <h1>Hey… I have something important ❤️</h1>
+  <p>
+    From the moment I met you, the world started making more sense.
+    This page exists for one simple reason.
+  </p>
+</div>
+
+<div class="gallery">
+  <img src="one.jpg">
+  <img src="two.jpg">
+  <img src="three.jpg">
+  <img src="four.jpg">
+  <img src="five.jpg">
+  <img src="six.jpg">
+  <img src="seven.jpg">
+</div>
+
+<div class="proposal">
+  <h1>Will you be my Valentine? 💌</h1>
+  <div class="buttons">
+    <button class="yes" onclick="accept()">Yes ❤️</button>
+    <button class="no" onmouseover="runAway(this)">No 😅</button>
+  </div>
+</div>
+
+<div id="final">
+  You just made me the happiest person alive 🥺❤️<br><br>
+  This is officially our little digital love story.
+</div>
+
+<script>
+function accept() {
+  document.querySelector('.proposal').style.display = 'none';
+  document.getElementById('final').style.display = 'block';
+  confetti();
+}
+
+function runAway(btn) {
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 100);
+  btn.style.position = 'absolute';
+  btn.style.left = x + 'px';
+  btn.style.top = y + 'px';
+}
+
+// simple confetti
+function confetti() {
+  for (let i = 0; i < 150; i++) {
+    const d = document.createElement("div");
+    d.style.position = "fixed";
+    d.style.width = "8px";
+    d.style.height = "8px";
+    d.style.background = ["#ff4d6d","#ffd6e0","#fff"][Math.floor(Math.random()*3)];
+    d.style.left = Math.random()*100 + "vw";
+    d.style.top = "-10px";
+    d.style.borderRadius = "50%";
+    d.style.opacity = Math.random();
+    d.style.zIndex = 9999;
+    document.body.appendChild(d);
+
+    let fall = setInterval(() => {
+      d.style.top = (parseFloat(d.style.top) + 4) + "px";
+      if (parseFloat(d.style.top) > window.innerHeight) {
+        d.remove();
+        clearInterval(fall);
+      }
+    }, 16);
+  }
+}
+</script>
+
+</body>
+</html>
