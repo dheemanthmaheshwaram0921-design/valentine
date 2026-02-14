@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>You Look Perfect Tonight ❤️</title>
+<title>Our Perfect Valentine ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap');
@@ -10,328 +10,274 @@
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
 
 body {
-  background: #000;
-  color: #fff;
-  overflow: hidden; /* Locked until click */
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
 }
 
-/* 1. Entry Screen */
+/* Entry Screen */
 #landing {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: #000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 5000;
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
 }
 
-#landing h1 {
-  font-family: 'Dancing Script', cursive;
-  font-size: 3.5rem;
-  color: #ff4d6d;
-  margin-bottom: 30px;
-  text-align: center;
+.ready-btn, #skip-btn {
+    background: #ff4d6d;
+    color: white;
+    border: none;
+    padding: 12px 40px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
 }
 
-.ready-btn {
-  background: #ff4d6d;
-  color: white;
-  border: none;
-  padding: 15px 60px;
-  font-size: 1.5rem;
-  border-radius: 50px;
-  cursor: pointer;
-  box-shadow: 0 0 30px rgba(255, 77, 109, 0.6);
-  font-weight: bold;
+#skip-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    z-index: 1000;
+    display: none;
+    font-size: 0.8rem;
+    padding: 8px 20px;
+    opacity: 0.6;
 }
 
-/* Heart Burst Animation */
-.heart-particle {
-  position: fixed;
-  pointer-events: none;
-  z-index: 6000;
-  font-size: 2rem;
-  animation: fly 1.5s ease-out forwards;
-}
-
-/* 2. Main Layout */
+/* Main Scrollable Area */
 #main-content {
-  opacity: 0;
-  transition: opacity 2s ease;
-  display: none;
+    display: none;
+    height: 100vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
-.hero {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* Updated to use your uploaded file name */
-  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('1000228180.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  text-align: center;
-}
-
-.hero h1 {
-  font-family: 'Dancing Script', cursive;
-  font-size: 4.5rem;
-  color: #ff4d6d;
-}
-
-/* 3. Apple Lyrics */
-.lyrics-section {
-  padding: 150px 20px;
-  min-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Static Lyric Overlay (No Jumping) */
+.lyrics-overlay {
+    position: fixed;
+    top: 20%;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 100;
 }
 
 .lyric-line {
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin: 30px 0;
-  opacity: 0.1;
-  filter: blur(5px);
-  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    position: absolute;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
 
 .lyric-line.active {
-  opacity: 1;
-  filter: blur(0);
-  transform: scale(1.1);
-  color: #fff;
-  text-shadow: 0 0 20px rgba(255,255,255,0.4);
+    opacity: 1;
+    transform: scale(1.05);
 }
 
-/* 4. Bouncing Gallery */
+/* Smooth Gallery */
 .gallery {
-  padding: 50px 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
+    padding: 100px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    align-items: center;
 }
 
 .gallery img {
-  width: 100%; height: 450px; object-fit: cover; border-radius: 25px;
-  opacity: 0; transform: translateY(100px) scale(0.8);
-  transition: 1s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 85%;
+    max-width: 450px;
+    border-radius: 30px;
+    border: 5px solid white;
+    opacity: 0.2;
+    transform: scale(0.8) translateY(50px);
+    transition: all 1s ease;
 }
 
 .gallery img.active {
-  opacity: 1; transform: translateY(0) scale(1);
+    opacity: 1;
+    transform: scale(1) translateY(0);
 }
 
-/* 5. Proposal */
 .proposal {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(#000, #590d22);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #000, #4a0e1c);
 }
 
-.buttons { position: relative; width: 100%; height: 200px; display: flex; justify-content: center; align-items: center;}
-
-.yes-btn { 
-  background: #ff4d6d; color: white; padding: 20px 80px; 
-  font-size: 2rem; border-radius: 60px; border: none; cursor: pointer; 
-  font-family: 'Dancing Script'; box-shadow: 0 0 20px rgba(255,77,109,0.5);
-}
-
-.no-btn { 
-  background: rgba(255,255,255,0.1); color: white; padding: 12px 30px; 
-  border-radius: 50px; border: none; position: absolute; cursor: pointer;
-}
-
+/* Final Screen with Bouquet */
 #final {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: white; color: #ff4d6d;
-  display: none; flex-direction: column; justify-content: center; align-items: center; 
-  z-index: 9999; text-align: center;
+    position: fixed;
+    inset: 0;
+    background: #fff0f3;
+    color: #ff4d6d;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    text-align: center;
 }
 
-@keyframes fly {
-  0% { transform: translate(0, 0) scale(1); opacity: 1; }
-  100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+.bouquet {
+    font-size: 8rem;
+    margin-bottom: 20px;
+    animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.no-btn { position: absolute; background: rgba(255,255,255,0.1); border: 1px solid white; color: white; padding: 10px 20px; border-radius: 50px; transition: 0.1s; }
+
+@keyframes popIn {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
 }
 </style>
 </head>
 <body>
 
 <audio id="bg-music">
-  <source src="perfect.mp3" type="audio/mpeg">
+    <source src="perfect.mp3" type="audio/mpeg">
 </audio>
 
 <div id="landing">
-  <h1>ARE YOU READY?</h1>
-  <button class="ready-btn" onclick="startExperience()">YES ❤️</button>
+    <h1 style="font-family: 'Dancing Script'; font-size: 3rem; color: #ff4d6d; margin-bottom: 20px;">ARE YOU READY?</h1>
+    <button class="ready-btn" onclick="start()">YES ❤️</button>
 </div>
 
-<div id="main-content">
-  <div class="hero">
-    <h1>Hey Beautiful ❤️</h1>
-    <p>Scroll as the music plays...</p>
-  </div>
+<button id="skip-btn" onclick="skip()">Skip</button>
 
-  <div class="lyrics-section" id="lyrics-wrapper"></div>
+<div id="main-content" onscroll="handleScroll()">
+    <div class="lyrics-overlay" id="lyric-box"></div>
 
-  <div class="gallery">
-    <img src="1000228180.jpg" class="reveal">
-    <img src="two.jpg" class="reveal">
-    <img src="three.jpg" class="reveal">
-    <img src="four.jpg" class="reveal">
-    <img src="five.jpg" class="reveal">
-    <img src="six.jpg" class="reveal">
-    <img src="seven.jpg" class="reveal">
-  </div>
-
-  <div class="proposal">
-    <h1 style="font-family: 'Dancing Script'; font-size: 3.5rem; margin-bottom: 50px;">Will you be my Valentine?</h1>
-    <div class="buttons">
-      <button class="yes-btn" onclick="celebrate()">YES! ❤️</button>
-      <button id="no-btn" class="no-btn" onmouseover="moveNo()">No 😅</button>
+    <div class="hero" style="height: 100vh; display: flex; align-items: center; justify-content: center; background: url('1000228180.jpg') center/cover;">
+        <h1 style="font-family: 'Dancing Script'; font-size: 4.5rem; text-shadow: 2px 2px 20px #000;">For My Forever</h1>
     </div>
-  </div>
+
+    <div class="gallery">
+        <img src="1000228180.jpg" class="reveal">
+        <img src="two.jpg" class="reveal">
+        <img src="three.jpg" class="reveal">
+        <img src="four.jpg" class="reveal">
+        <img src="five.jpg" class="reveal">
+        <img src="six.jpg" class="reveal">
+        <img src="seven.jpg" class="reveal">
+    </div>
+
+    <div class="proposal" id="proposal-sec">
+        <h1 style="font-family: 'Dancing Script'; font-size: 3.5rem; margin-bottom: 40px; text-align: center;">Will you be my Valentine?</h1>
+        <button onclick="celebrate()" style="background: #ff4d6d; color: white; padding: 20px 70px; border-radius: 60px; border: none; font-size: 1.8rem; font-family: 'Dancing Script'; cursor: pointer; box-shadow: 0 10px 30px rgba(255,77,109,0.5);">YES! ❤️</button>
+        <button id="no-btn" class="no-btn" onmouseover="moveNo()">No 😅</button>
+    </div>
 </div>
 
 <div id="final">
-  <h1 style="font-family: 'Dancing Script'; font-size: 5rem;">I LOVE YOU! 💖</h1>
-  <p style="font-size: 1.5rem; color: #333;">You look perfect tonight.</p>
+    <div class="bouquet">💐🌹🌹🌹</div>
+    <h1 style="font-family: 'Dancing Script'; font-size: 4rem;">I LOVE YOU! 💖</h1>
+    <p style="font-size: 1.2rem; color: #590d22;">You made me the luckiest person.</p>
 </div>
 
 <script>
 const music = document.getElementById('bg-music');
-const lyricsWrapper = document.getElementById('lyrics-wrapper');
-
-const lyricData = [
-  { time: 1, text: "I found a love... for me" },
-  { time: 7, text: "Darling, just dive right in" },
-  { time: 11, text: "And follow my lead" },
-  { time: 16, text: "I found a girl, beautiful and sweet" },
-  { time: 24, text: "I never knew you were the someone" },
-  { time: 28, text: "Waiting for me" },
-  { time: 33, text: "Cause we were just kids when we fell in love" },
-  { time: 40, text: "Not knowing what it was" },
-  { time: 46, text: "I will not give you up this time" },
-  { time: 52, text: "But darling, just kiss me slow" },
-  { time: 56, text: "Your heart is all I own" },
-  { time: 61, text: "And in your eyes, you're holding mine" },
-  { time: 68, text: "Baby, I'm dancing in the dark" },
-  { time: 74, text: "With you between my arms" },
-  { time: 79, text: "Barefoot on the grass" },
-  { time: 83, text: "Listening to our favorite song" },
-  { time: 88, text: "When you said you looked a mess" },
-  { time: 92, text: "I whispered underneath my breath" },
-  { time: 96, text: "But you heard it..." },
-  { time: 101, text: "Darling, you look perfect tonight" },
-  { time: 115, text: "I found a woman, stronger than anyone I know" },
-  { time: 123, text: "She shares my dreams, I hope that someday I'll share her home" },
-  { time: 131, text: "I found a love, to carry more than just my secrets" },
-  { time: 138, text: "To carry love, to carry children of our own" },
-  { time: 146, text: "We are still kids, but we're so in love" },
-  { time: 153, text: "Fighting against all odds" },
-  { time: 159, text: "I know we'll be alright this time" },
-  { time: 165, text: "Darling, just hold my hand" },
-  { time: 169, text: "Be my girl, I'll be your man" },
-  { time: 173, text: "I see my future in your eyes" },
-  { time: 181, text: "Baby, I'm dancing in the dark" },
-  { time: 187, text: "With you between my arms" },
-  { time: 191, text: "Barefoot on the grass" },
-  { time: 196, text: "Listening to our favorite song" },
-  { time: 201, text: "When I saw you in that dress" },
-  { time: 205, text: "Looking so beautiful" },
-  { time: 209, text: "I don't deserve this..." },
-  { time: 214, text: "Darling, you look perfect tonight" }
+const lyrics = [
+    { t: 1, text: "I found a love... for me" },
+    { t: 7, text: "Darling, just dive right in" },
+    { t: 11, text: "And follow my lead" },
+    { t: 16, text: "I found a girl, beautiful and sweet" },
+    { t: 24, text: "I never knew you were the someone" },
+    { t: 28, text: "Waiting for me" },
+    { t: 33, text: "Cause we were just kids when we fell in love" },
+    { t: 40, text: "Not knowing what it was" },
+    { t: 46, text: "I will not give you up this time" },
+    { t: 52, text: "But darling, just kiss me slow" },
+    { t: 56, text: "Your heart is all I own" },
+    { t: 61, text: "And in your eyes, you're holding mine" },
+    { t: 68, text: "Baby, I'm dancing in the dark" },
+    { t: 74, text: "With you between my arms" },
+    { t: 101, text: "Darling, you look perfect tonight" }
 ];
 
-lyricData.forEach((data, index) => {
-  const p = document.createElement('p');
-  p.innerText = data.text;
-  p.classList.add('lyric-line');
-  p.setAttribute('id', 'line-' + index);
-  lyricsWrapper.appendChild(p);
+const lyricBox = document.getElementById('lyric-box');
+lyrics.forEach((l, i) => {
+    const el = document.createElement('div');
+    el.className = 'lyric-line';
+    el.id = 'l-' + i;
+    el.innerText = l.text;
+    lyricBox.appendChild(el);
 });
 
-function startExperience() {
-  createHeartBurst();
-  document.getElementById('landing').style.opacity = '0';
-  setTimeout(() => {
+function start() {
     document.getElementById('landing').style.display = 'none';
-    const main = document.getElementById('main-content');
-    main.style.display = 'block';
-    setTimeout(() => main.style.opacity = '1', 50);
-    document.body.style.overflow = 'auto';
+    document.getElementById('main-content').style.display = 'block';
+    document.getElementById('skip-btn').style.display = 'block';
+    document.body.style.overflow = 'hidden'; 
     music.play();
-  }, 1000);
-}
-
-function createHeartBurst() {
-  for (let i = 0; i < 35; i++) {
-    const heart = document.createElement('div');
-    heart.innerHTML = '❤️';
-    heart.className = 'heart-particle';
-    heart.style.left = '50%';
-    heart.style.top = '50%';
-    heart.style.setProperty('--x', (Math.random() - 0.5) * 1000 + 'px');
-    heart.style.setProperty('--y', (Math.random() - 0.5) * 1000 + 'px');
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 1500);
-  }
 }
 
 music.ontimeupdate = () => {
-  const currentTime = music.currentTime;
-  lyricData.forEach((data, index) => {
-    if (currentTime >= data.time) {
-      document.querySelectorAll('.lyric-line').forEach(l => l.classList.remove('active'));
-      const activeLine = document.getElementById('line-' + index);
-      if(activeLine) {
-        activeLine.classList.add('active');
-        activeLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }
-  });
+    const time = music.currentTime;
+    lyrics.forEach((l, i) => {
+        const el = document.getElementById('l-' + i);
+        if (time >= l.t && (i === lyrics.length - 1 || time < lyrics[i+1].t)) {
+            el.classList.add('active');
+        } else {
+            el.classList.remove('active');
+        }
+    });
 };
 
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.reveal').forEach(img => {
-    if (img.getBoundingClientRect().top < window.innerHeight - 50) {
-      img.classList.add('active');
-    }
-  });
-});
+function handleScroll() {
+    document.querySelectorAll('.reveal').forEach(img => {
+        const rect = img.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.75) {
+            img.classList.add('active');
+        }
+    });
+}
+
+function skip() {
+    document.getElementById('proposal-sec').scrollIntoView();
+}
 
 function moveNo() {
-  const btn = document.getElementById('no-btn');
-  btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-  btn.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+    const btn = document.getElementById('no-btn');
+    btn.style.left = Math.random() * 70 + 'vw';
+    btn.style.top = Math.random() * 70 + 'vh';
 }
 
 function celebrate() {
-  document.getElementById('final').style.display = 'flex';
-  for(let i=0; i<100; i++) {
-    const heart = document.createElement('div');
-    heart.innerHTML = '💖';
-    heart.style.position = 'fixed';
-    heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.top = '100vh';
-    heart.style.fontSize = '25px';
-    heart.style.transition = `transform ${Math.random() * 3 + 2}s linear, opacity 2s`;
-    document.body.appendChild(heart);
-    setTimeout(() => {
-      heart.style.transform = `translateY(-110vh) rotate(${Math.random() * 360}deg)`;
-      heart.style.opacity = '0';
-    }, 100);
-  }
+    document.getElementById('final').style.display = 'flex';
+    document.getElementById('skip-btn').style.display = 'none';
+    createHearts();
+}
+
+function createHearts() {
+    for(let i=0; i<50; i++) {
+        const h = document.createElement('div');
+        h.innerHTML = '🌹';
+        h.style.position = 'fixed';
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.top = '100vh';
+        h.style.fontSize = '25px';
+        h.style.transition = `transform ${Math.random() * 3 + 2}s linear`;
+        document.body.appendChild(h);
+        setTimeout(() => h.style.transform = `translateY(-110vh) rotate(360deg)`, 100);
+    }
 }
 </script>
 </body>
